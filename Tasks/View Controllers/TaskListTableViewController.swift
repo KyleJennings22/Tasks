@@ -9,6 +9,7 @@
 import UIKit
 
 class TaskListTableViewController: UITableViewController {
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +29,13 @@ class TaskListTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as? ButtonTableViewCell else {return UITableViewCell()}
 
         let task = TaskController.sharedInstance.tasks[indexPath.row]
         
-        cell.textLabel?.text = task.name
+        cell.primaryLabel.text = task.name
+        cell.updateButton(task.isComplete)
+        cell.delegate = self
 
         return cell
     }
@@ -48,6 +51,9 @@ class TaskListTableViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
+    
+    
+    
     
 
     /*
@@ -70,9 +76,23 @@ class TaskListTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "toTaskDetail" {
+            guard let indexPath = tableView.indexPathForSelectedRow, let destinationVC = segue.destination as? TaskDetailTableViewController else {return}
+            let task = TaskController.sharedInstance.tasks[indexPath.row]
+            destinationVC.task = task
+            destinationVC.dueDateValue = task.due
+        }
     }
     
 
+}
+
+extension TaskListTableViewController: ButtonTableViewCellDelegate {
+    func buttonCellButtonTapped(_ sender: ButtonTableViewCell) {
+        guard let indexPath = tableView.indexPath(for: sender)
+            else {return}
+        let task = TaskController.sharedInstance.tasks[indexPath.row]
+        TaskController.sharedInstance.toggleIsCompleteFor(task: task)
+        tableView.reloadData()
+    }
 }

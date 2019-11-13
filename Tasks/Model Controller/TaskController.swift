@@ -12,27 +12,33 @@ import CoreData
 class TaskController {
     static let sharedInstance = TaskController()
     
-    var tasks: [Task] = []
-    
-    init() {
-        var mockTasks: [Task] = []
-        let task1 = Task(name: "Nerp", isComplete: true)
-        let task2 = Task(name: "Test", due: Date())
-        mockTasks.append(task1)
-        mockTasks.append(task2)
-        self.tasks = mockTasks
+    var tasks: [Task] {
+        let moc = CoreDataStack.context
+        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        let results = try? moc.fetch(fetchRequest)
+        return results ?? []
     }
     
     func add(taskWithName name: String, notes: String?, due: Date?) {
-        
+        _ = Task(name: name)
+        saveToPersistentStore()
     }
     
     func update(task: Task, name: String, notes: String?, due: Date?) {
-        
+        task.name = name
+        task.notes = notes
+        task.due = due
+        saveToPersistentStore()
     }
     
     func remove(task: Task) {
-        
+        CoreDataStack.context.delete(task)
+        saveToPersistentStore()
+    }
+    
+    func toggleIsCompleteFor(task: Task) {
+        task.isComplete = !task.isComplete
+        saveToPersistentStore()
     }
     
     func saveToPersistentStore() {
@@ -43,12 +49,4 @@ class TaskController {
             print(error.localizedDescription)
         }
     }
-    
-    func fetchRequest() -> [Task] {
-        let moc = CoreDataStack.context
-        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
-        let results = try? moc.fetch(fetchRequest)
-        return results ?? []
-    }
-    
 }
