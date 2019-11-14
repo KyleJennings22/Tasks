@@ -26,17 +26,18 @@
                                             <rect key="frame" x="20" y="11" width="374" height="52"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40g-le-vQM">
-                                                    <rect key="frame" x="0.0" y="0.0" width="121" height="52"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="133" height="52"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y8a-61-Dc8">
-                                                    <rect key="frame" x="322" y="0.0" width="52" height="52"/>
+                                                    <rect key="frame" x="334" y="0.0" width="40" height="52"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="Y8a-61-Dc8" secondAttribute="height" multiplier="1:1" id="gNY-4N-nRs"/>
+                                                        <constraint firstAttribute="width" constant="40" id="geN-bP-2y5"/>
                                                     </constraints>
-                                                    <state key="normal" title="Button" image="checkmark.seal" catalog="system"/>
+                                                    <state key="normal" image="emptycheck"/>
                                                     <connections>
                                                         <action selector="buttonTapped:" destination="tDm-9R-nvc" eventType="touchUpInside" id="u55-f9-jId"/>
                                                     </connections>
@@ -232,7 +233,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="checkmark.seal" catalog="system" width="64" height="60"/>
+        <image name="emptycheck" width="225" height="225"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ER6-pO-dUF"/>

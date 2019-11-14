@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import CoreData
 
 class TaskListTableViewController: UITableViewController {
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        TaskController.sharedInstance.fetchedResultsController.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,31 +48,8 @@ class TaskListTableViewController: UITableViewController {
         if editingStyle == .delete {
             let task = TaskController.sharedInstance.tasks[indexPath.row]
             TaskController.sharedInstance.remove(task: task)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    
-    
-    
-    
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 
@@ -96,3 +75,55 @@ extension TaskListTableViewController: ButtonTableViewCellDelegate {
         tableView.reloadData()
     }
 }
+
+// MARK: - Fetched Results Controller Delegate
+
+extension TaskListTableViewController: NSFetchedResultsControllerDelegate {
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        
+        let indexSet = IndexSet(integer: sectionIndex)
+        
+        switch type {
+        case .insert:
+            tableView.insertSections(indexSet, with: .fade)
+        case .delete:
+            tableView.insertSections(indexSet, with: .fade)
+            
+        default: return
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            guard let newIndexPath = newIndexPath
+                else { return }
+            tableView.insertRows(at: [newIndexPath], with: .fade)
+        case .delete:
+            guard let indexPath = indexPath
+                else { return }
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        case .update:
+            guard let indexPath = indexPath
+                else { return }
+            tableView.reloadRows(at: [indexPath], with: .none)
+        case .move:
+            guard let indexPath = indexPath, let newIndexPath = newIndexPath
+                else { return }
+            tableView.moveRow(at: indexPath, to: newIndexPath)
+        @unknown default:
+            fatalError("NSFetchedResultsChangeType has new unhandled cases")
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+}
+

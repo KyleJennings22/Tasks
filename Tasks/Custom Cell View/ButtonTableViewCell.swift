@@ -27,9 +27,9 @@ class ButtonTableViewCell: UITableViewCell {
 extension ButtonTableViewCell {
     func updateButton(_ isComplete: Bool) {
         if isComplete {
-            completeButton.setImage(.checkmark, for: .normal)
+            completeButton.setImage(UIImage(named: "checked"), for: .normal)
         } else {
-            completeButton.setImage(.strokedCheckmark, for: .normal)
+            completeButton.setImage(UIImage(named: "emptycheck"), for: .normal)
         }
     }
 }
