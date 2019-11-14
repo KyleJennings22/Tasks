@@ -76,7 +76,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JNN-h3-p9S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="913.04347826086962" y="95.758928571428569"/>
+            <point key="canvasLocation" x="736" y="97"/>
         </scene>
         <!--Task Detail Table View Controller-->
         <scene sceneID="2Iy-Ky-mFz">
@@ -105,8 +105,6 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="iD3-9m-Pm6" secondAttribute="trailing" constant="4" id="AKa-oh-Vn6"/>
                                                 <constraint firstAttribute="bottom" secondItem="iD3-9m-Pm6" secondAttribute="bottom" constant="4" id="Ev1-JR-if9"/>
-                                                <constraint firstItem="iD3-9m-Pm6" firstAttribute="centerY" secondItem="Rxa-ly-cYW" secondAttribute="centerY" id="OR7-mX-aiy"/>
-                                                <constraint firstItem="iD3-9m-Pm6" firstAttribute="centerX" secondItem="Rxa-ly-cYW" secondAttribute="centerX" id="WC8-6i-dtB"/>
                                                 <constraint firstItem="iD3-9m-Pm6" firstAttribute="top" secondItem="Rxa-ly-cYW" secondAttribute="top" constant="4" id="aAe-QL-jG4"/>
                                                 <constraint firstItem="iD3-9m-Pm6" firstAttribute="leading" secondItem="Rxa-ly-cYW" secondAttribute="leading" constant="4" id="d8g-PW-ZhZ"/>
                                             </constraints>
@@ -211,7 +209,7 @@
                     </connections>
                 </datePicker>
             </objects>
-            <point key="canvasLocation" x="1624.6376811594205" y="105.80357142857143"/>
+            <point key="canvasLocation" x="1448" y="107"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="INJ-MH-CSu">
